@@ -167,6 +167,7 @@ export async function login(req, res) {
   });
 }
 
+// Get current user info function
 export async function getMe(req, res) {
   // Expect `Authorization: Bearer <token>`
   const token = req.headers.authorization?.split(" ")[1];
@@ -190,7 +191,7 @@ export async function getMe(req, res) {
     },
   });
 }
-
+// Rotate refresh token function
 export async function refreshToken(req, res) {
   // Read refresh token from the HTTP-only cookie
   const refreshToken = req.cookies.refreshToken;
@@ -311,8 +312,8 @@ export async function logoutAll(req, res) {
       revoked: true,
     },
   );
-  re.clearCookie("refreshToken");
+  res.clearCookie("refreshToken");
   res.status(200).json({
-    message: "Logged out from all sessions successfully",
+    message: "Logged out from all devices successfully",
   });
 }
