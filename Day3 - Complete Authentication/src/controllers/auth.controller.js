@@ -53,19 +53,29 @@ export async function register(req, res) {
 
   const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
 
-  await otpModel.create({
+  const otpDoc = await otpModel.create({
     email,
     user: user._id,
     otpHash,
     expiresAt: new Date(Date.now() + 10 * 60 * 1000), // OTP expires in 10 minutes
   });
 
-  await sendEmail(
-    email,
-    "OTP Verification",
-    `Your OTP code is: ${otp}`,
-    otpHtml,
-  );
+  try {
+    await sendEmail(
+      email,
+      "OTP Verification",
+      `Your OTP code is: ${otp}`,
+      otpHtml,
+    );
+  } catch (error) {
+    console.error("OTP email send failed, rolling back registration:", error);
+    await otpModel.deleteMany({ user: user._id });
+    await userModel.findByIdAndDelete(user._id);
+
+    return res.status(500).json({
+      message: "Failed to send verification email. Please try again later.",
+    });
+  }
 
   // // Create a refresh token (longer lived) and an access token (short-lived)
   // const refreshToken = jwt.sign(
@@ -360,9 +370,15 @@ export async function verifyEmail(req, res) {
       message: "Invalid or expired OTP",
     });
   }
-  const user = await userModel.findByIdAndUpdate(otpDoc.user, {
-    verified: true,
-  });
+  const user = await userModel.findByIdAndUpdate(
+    otpDoc.user,
+    {
+      verified: true,
+    },
+    {
+      new: true,
+    },
+  );
   if (!user) {
     return res.status(404).json({
       message: "User not found",
