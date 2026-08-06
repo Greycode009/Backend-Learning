@@ -1,0 +1,26 @@
+# Backend Learning Summary
+
+## Day 1 - Authentication
+
+- Set up a basic Express/MongoDB authentication flow
+- Implemented user registration and login
+- Stored hashed passwords in MongoDB
+- Added JWT access token generation
+- Built auth routes and controller logic
+
+## Day 2 - Authentication
+
+- Added refresh token handling and session storage
+- Implemented secure HTTP-only refresh cookies
+- Added `getMe`, `refreshToken`, `logout`, and `logoutAll` routes
+- Created session persistence with refresh token hashing
+- Improved auth flow with token rotation and revocation support
+
+## Day 3 - Complete Authentication
+
+- Added email verification with OTP generation and verification
+- Implemented email delivery using Nodemailer and Gmail OAuth2
+- Added OTP storage, expiration, and validation in MongoDB
+- Enforced email verification before login
+- Added rollback on failed email send and improved error handling
+- Continued managing access/refresh tokens and session logout
