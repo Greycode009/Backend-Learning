@@ -101,6 +101,72 @@ export async function register(req, res) {
   });
 }
 
+// Login function
+export async function login(req, res) {
+  const { email, password } = req.body;
+  const user = await userModel.findOne({ email });
+  if (!user) {
+    return res.status(401).json({
+      message: "Invalid email or password",
+    });
+  }
+  const hashedPassword = crypto
+    .createHash("sha256")
+    .update(password)
+    .digest("hex");
+
+  const isPasswordValid = hashedPassword === user.password;
+  if (!isPasswordValid) {
+    return res.status(401).json({
+      message: "Invalid email or password",
+    });
+  }
+  const refreshToken = jwt.sign(
+    {
+      id: user._id,
+    },
+    config.JWT_SECRET,
+    {
+      expiresIn: config.REFRESH_TOKEN_EXPIRATION,
+    },
+  );
+  const refreshTokenHash = crypto
+    .createHash("sha256")
+    .update(refreshToken)
+    .digest("hex");
+  const session = await sessionModel.create({
+    user: user._id,
+    refreshTokenHash,
+    ip: req.ip,
+    userAgent: req.headers["user-agent"],
+  });
+
+  const accessToken = jwt.sign(
+    {
+      id: user._id,
+      sessionId: session._id,
+    },
+    config.JWT_SECRET,
+    {
+      expiresIn: config.ACCESS_TOKEN_EXPIRATION,
+    },
+  );
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
+  res.status(200).json({
+    message: "Login successful",
+    user: {
+      username: user.username,
+      email: user.email,
+    },
+    accessToken,
+  });
+}
+
 export async function getMe(req, res) {
   // Expect `Authorization: Bearer <token>`
   const token = req.headers.authorization?.split(" ")[1];
@@ -173,7 +239,10 @@ export async function refreshToken(req, res) {
       expiresIn: config.REFRESH_TOKEN_EXPIRATION,
     },
   );
-  const newRefreshTokenHash = crypto.createHash("sha256").update(newRefreshToken).digest("hex");
+  const newRefreshTokenHash = crypto
+    .createHash("sha256")
+    .update(newRefreshToken)
+    .digest("hex");
   session.refreshTokenHash = newRefreshTokenHash;
   await session.save();
 
@@ -221,5 +290,29 @@ export async function logout(req, res) {
 
   res.status(200).json({
     message: "Logged out successfully",
+  });
+}
+
+// Logout from all sessions function
+export async function logoutAll(req, res) {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    return res.status(400).json({
+      message: "Refresh token is missing",
+    });
+  }
+  const decode = jwt.verify(refreshToken, config.JWT_SECRET);
+  await sessionModel.updateMany(
+    {
+      user: decode.id,
+      revoked: false,
+    },
+    {
+      revoked: true,
+    },
+  );
+  re.clearCookie("refreshToken");
+  res.status(200).json({
+    message: "Logged out from all sessions successfully",
   });
 }
