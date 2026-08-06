@@ -3,7 +3,9 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 import sessionModel from "../models/session.model.js";
-
+import { sendEmail } from "../utils/email.js";
+import { generateOTP, getOtpHtml } from "../utils/utils.js";
+import otpModel from "../models/otp.model.js";
 /**
  * Authentication controller
  *
@@ -46,49 +48,68 @@ export async function register(req, res) {
     password: hashedPassword,
   });
 
-  // Create a refresh token (longer lived) and an access token (short-lived)
-  const refreshToken = jwt.sign(
-    {
-      id: user._id,
-    },
-    config.JWT_SECRET,
-    {
-      expiresIn: config.REFRESH_TOKEN_EXPIRATION,
-    },
-  );
-  const refreshTokenHash = crypto
-    .createHash("sha256")
-    .update(refreshToken)
-    .digest("hex");
-  // We create a session in the database to store the refresh token hash, IP,
-  // and user agent for security and revocation purposes.
-  // This is a good practice for managing user sessions and enhancing security.
-  const session = await sessionModel.create({
+  const otp = generateOTP();
+  const otpHtml = getOtpHtml(otp);
+
+  const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
+
+  await otpModel.create({
+    email,
     user: user._id,
-    refreshTokenHash,
-    ip: req.ip,
-    userAgent: req.headers["user-agent"],
+    otpHash,
+    expiresAt: new Date(Date.now() + 10 * 60 * 1000), // OTP expires in 10 minutes
   });
 
-  const accessToken = jwt.sign(
-    {
-      id: user._id,
-      sessionId: session._id, // Include session ID in the access token for validation
-    },
-    config.JWT_SECRET,
-    {
-      expiresIn: config.ACCESS_TOKEN_EXPIRATION,
-    },
+  await sendEmail(
+    email,
+    "OTP Verification",
+    `Your OTP code is: ${otp}`,
+    otpHtml,
   );
 
-  // Set refresh token in an HTTP-only, secure cookie so it's not accessible to JS.
-  // Note: `secure: true` requires HTTPS — this can prevent cookies in local HTTP dev.
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  });
+  // // Create a refresh token (longer lived) and an access token (short-lived)
+  // const refreshToken = jwt.sign(
+  //   {
+  //     id: user._id,
+  //   },
+  //   config.JWT_SECRET,
+  //   {
+  //     expiresIn: config.REFRESH_TOKEN_EXPIRATION,
+  //   },
+  // );
+  // const refreshTokenHash = crypto
+  //   .createHash("sha256")
+  //   .update(refreshToken)
+  //   .digest("hex");
+  // // We create a session in the database to store the refresh token hash, IP,
+  // // and user agent for security and revocation purposes.
+  // // This is a good practice for managing user sessions and enhancing security.
+  // const session = await sessionModel.create({
+  //   user: user._id,
+  //   refreshTokenHash,
+  //   ip: req.ip,
+  //   userAgent: req.headers["user-agent"],
+  // });
+
+  // const accessToken = jwt.sign(
+  //   {
+  //     id: user._id,
+  //     sessionId: session._id, // Include session ID in the access token for validation
+  //   },
+  //   config.JWT_SECRET,
+  //   {
+  //     expiresIn: config.ACCESS_TOKEN_EXPIRATION,
+  //   },
+  // );
+
+  // // Set refresh token in an HTTP-only, secure cookie so it's not accessible to JS.
+  // // Note: `secure: true` requires HTTPS — this can prevent cookies in local HTTP dev.
+  // res.cookie("refreshToken", refreshToken, {
+  //   httpOnly: true,
+  //   secure: true,
+  //   sameSite: "strict",
+  //   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  // });
 
   // Return created user info (omit password) and the access token for immediate use
   return res.status(201).json({
@@ -96,8 +117,8 @@ export async function register(req, res) {
     user: {
       username: user.username,
       email: user.email,
+      verified: user.verified,
     },
-    accessToken,
   });
 }
 
@@ -108,6 +129,12 @@ export async function login(req, res) {
   if (!user) {
     return res.status(401).json({
       message: "Invalid email or password",
+    });
+  }
+  if (!user.verified) {
+    return res.status(403).json({
+      message:
+        "Email not verified. Please verify your email before logging in.",
     });
   }
   const hashedPassword = crypto
@@ -315,5 +342,43 @@ export async function logoutAll(req, res) {
   res.clearCookie("refreshToken");
   res.status(200).json({
     message: "Logged out from all devices successfully",
+  });
+}
+
+// Verify email function
+export async function verifyEmail(req, res) {
+  const { email, otp } = req.body;
+  const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
+
+  const otpDoc = await otpModel.findOne({
+    email,
+    otpHash,
+    expiresAt: { $gt: new Date() }, // Ensure OTP is not expired
+  });
+  if (!otpDoc) {
+    return res.status(400).json({
+      message: "Invalid or expired OTP",
+    });
+  }
+  const user = await userModel.findByIdAndUpdate(otpDoc.user, {
+    verified: true,
+  });
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+    });
+  }
+
+  await otpModel.deleteMany({
+    user: otpDoc.user,
+  }); // Remove all OTPs for this user after successful verification
+
+  return res.status(200).json({
+    message: "Email verified successfully",
+    user: {
+      username: user.username,
+      email: user.email,
+      verified: user.verified,
+    },
   });
 }
