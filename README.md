@@ -24,3 +24,12 @@
 - Enforced email verification before login
 - Added rollback on failed email send and improved error handling
 - Continued managing access/refresh tokens and session logout
+
+## Day 4 - Authorization
+
+- Implemented JWT authentication middleware (`VerifyJWT`) to protect private routes
+- Built Role-Based Access Control (RBAC) using user roles and authorization middleware
+- Added role information to JWT access tokens for permission-based route protection
+- Implemented session validation to revoke access after logout or session expiration
+- Secured protected routes with authentication and authorization middleware chaining
+- Learned the concept of Ownership-Based Authorization for resource-level access control
