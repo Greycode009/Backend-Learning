@@ -182,6 +182,7 @@ export async function login(req, res) {
     {
       id: user._id,
       sessionId: session._id,
+      role: user.role, // Include user role in the access token for authorization
     },
     config.JWT_SECRET,
     {
