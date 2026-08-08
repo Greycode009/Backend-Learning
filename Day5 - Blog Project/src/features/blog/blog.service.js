@@ -11,3 +11,9 @@ export const getAllBlogsService = async () => {
 
   return blogs;
 };
+
+export const getBlogByIdService = async (blogId) => {
+  const blog = await Blog.findById(blogId);
+
+  return blog;
+};
