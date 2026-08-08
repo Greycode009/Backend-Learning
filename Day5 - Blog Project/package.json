@@ -1,15 +1,16 @@
 {
-  "name": "day5---blog-project",
+  "name": "Blog_Project",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
