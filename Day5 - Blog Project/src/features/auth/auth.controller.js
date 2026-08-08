@@ -1,12 +1,11 @@
-import userModel from "../models/user.model.js";
+import userModel from "../user/user.model.js";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import config from "../config/config.js";
+import config from "../../config/config.js";
 import sessionModel from "./session.model.js";
 import { sendEmail } from "./email.service.js";
 import { generateOTP, getOtpHtml } from "../../utils/utils.js";
 import otpModel from "./otp.model.js";
-
 
 //POST register function
 export async function register(req, res) {
