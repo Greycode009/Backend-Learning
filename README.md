@@ -33,3 +33,11 @@
 - Implemented session validation to revoke access after logout or session expiration
 - Secured protected routes with authentication and authorization middleware chaining
 - Learned the concept of Ownership-Based Authorization for resource-level access control
+
+## Day 5 – Blog API
+
+- Started building a **Blog API** with Node.js & MongoDB
+- Integrated **Authentication & Authorization**
+- Implemented **Protected & Role-Based Routes**
+- Built **Create & Read Blog APIs**
+- Connected blogs with **authenticated users & ownership**
