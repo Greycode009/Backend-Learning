@@ -1,0 +1,107 @@
+[33mcommit 9aa7f3a2d320b459d69a169056ab1e77f39aef2b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Sat Aug 8 14:58:49 2026 +0545
+
+    Added dns:set server : solve db connection , added blog model
+
+[33mcommit 796d22f470bfd298430dacb0465e135053542fb3[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Sat Aug 8 13:20:56 2026 +0545
+
+    Fix : Update type module and add script  in package.json
+
+[33mcommit c7f15299403e2b9a2bc7bab389c8830869aa353a[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Sat Aug 8 13:17:18 2026 +0545
+
+    Blog project : feature based structure , reuse the same auth code from Day4
+
+[33mcommit 7b39d1c9827db8eab7c420e22ea45758ebf76a8e[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Fri Aug 7 16:14:33 2026 +0545
+
+    Update: Readme.md for Day4 and fix: .env.example of Day 3
+
+[33mcommit e777686d7d66449332b6386ef4b0f9e630820fb1[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Fri Aug 7 16:03:43 2026 +0545
+
+    feat: implement JWT authorization with RBAC and session validation
+
+[33mcommit f9e2d9ad7ea9f37d26b7c28e15012e29fc13fdcd[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Fri Aug 7 14:26:37 2026 +0545
+
+    Initialized project from Day3
+
+[33mcommit 6c8be89c4fb1d274d48c609a97d3d5546a4fe454[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 18:06:19 2026 +0545
+
+    Update what i did each day in Readme.md
+
+[33mcommit f46fcc86a01e7dd1549b291c96ed2e69ad126e56[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 17:38:41 2026 +0545
+
+    Fix: OTP based authentication
+
+[33mcommit 80d1f096d524cb3f8acc3b4b7256516647e269ad[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 16:55:10 2026 +0545
+
+    Fix : resolve email service module import/export issue
+
+[33mcommit e92825e4ecb3811f0c7f48316f1899c49594e759[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 16:48:27 2026 +0545
+
+    Feature: OTP based authentication
+
+[33mcommit 87ae9c194a6fc9b25090508012404b91c2ace734[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 15:35:06 2026 +0545
+
+    Fix : Logout from all devices
+
+[33mcommit bb18e20a5a0c44f1bb96f8317bf74e7dcdd7e831[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 15:18:01 2026 +0545
+
+    Day 3 initialized from Day 2
+
+[33mcommit 0730a6e41deaa5ce00262c3b1eda450e38531bff[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 15:00:16 2026 +0545
+
+    Add login feature
+
+[33mcommit fe8d2ad6839aa9dad700b8b4f82d2f1510c3158a[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 05:52:00 2026 +0545
+
+    feature : add logout endpoint to revoke refresh session and clear cookie
+
+[33mcommit 419446a4ce00127981f0f6e449b07200afc94fa8[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Thu Aug 6 03:58:27 2026 +0545
+
+    Day 2 complete
+
+[33mcommit 85df500b23a825e6e17d1a1711dc183eb9e3292c[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Wed Aug 5 12:21:53 2026 +0545
+
+    Initailized files from Day 1
+
+[33mcommit 88afa2b52bd493a8a4d62fefbc72e7d804996804[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Tue Aug 4 22:25:12 2026 +0545
+
+    Add authentication backend setup with user registration flow
+
+[33mcommit ec4e953173ff7409bdb55c5fc8d0df706b74ae5f[m
+Author: Dipesh Malla <gamerdipesh002@gmail.com>
+Date:   Tue Aug 4 08:46:18 2026 +0545
+
+    Initialized server
