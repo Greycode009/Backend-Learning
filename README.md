@@ -41,3 +41,11 @@
 - Implemented **Protected & Role-Based Routes**
 - Built **Create & Read Blog APIs**
 - Connected blogs with **authenticated users & ownership**
+
+## Day 6 - Blog API & CRUD
+
+- Built Complete Blog CRUD APIs
+- Implemented Ownership-Based Access Control
+- Connected Blogs with User Accounts
+- Tested All CRUD Operations with Postman
+- Verified Authorization, Error Handling & Edge Cases
