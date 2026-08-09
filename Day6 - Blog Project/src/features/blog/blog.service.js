@@ -17,3 +17,17 @@ export const getBlogByIdService = async (blogId) => {
 
   return blog;
 };
+
+export const updateBlogService = async (blogId, updateData) => {
+  const blog = await Blog.findByIdAndUpdate(blogId, updateData, {
+    new: true,
+    runValidators: true,
+  });
+  return blog;
+};
+
+export const deleteBlogService = async (blogId) => {
+  const blog = await Blog.findByIdAndDelete(blogId);
+
+  return blog;
+};
