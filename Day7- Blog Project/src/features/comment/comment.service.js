@@ -6,3 +6,8 @@ export const createCommentService = async (commentData) => {
   return comment;
 };
 
+export const getCommentsByBlogService = async (blogId) => {
+  const comments = await Comment.find({ blog: blogId });
+
+  return comments;
+};
