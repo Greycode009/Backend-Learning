@@ -11,3 +11,16 @@ export const getCommentsByBlogService = async (blogId) => {
 
   return comments;
 };
+
+export const updateCommentService = async (commentId, updateData) => {
+  const comment = await Comment.findByIdAndUpdate(
+    commentId,
+    updateData,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  return comment;
+};

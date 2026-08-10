@@ -13,6 +13,6 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use("/api/blogs", blogRouter);
-app.use("/api/blogs", commentRouter);
+app.use("/api/comments", commentRouter);
 
 export default app;
