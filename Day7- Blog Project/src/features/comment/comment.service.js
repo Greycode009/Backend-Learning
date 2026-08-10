@@ -13,14 +13,16 @@ export const getCommentsByBlogService = async (blogId) => {
 };
 
 export const updateCommentService = async (commentId, updateData) => {
-  const comment = await Comment.findByIdAndUpdate(
-    commentId,
-    updateData,
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const comment = await Comment.findByIdAndUpdate(commentId, updateData, {
+    new: true,
+    runValidators: true,
+  });
+
+  return comment;
+};
+
+export const deleteCommentService = async (commentId) => {
+  const comment = await Comment.findByIdAndDelete(commentId);
 
   return comment;
 };

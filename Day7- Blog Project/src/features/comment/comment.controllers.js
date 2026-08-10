@@ -1,5 +1,6 @@
 import {
   createCommentService,
+  deleteCommentService,
   getCommentsByBlogService,
   updateCommentService,
 } from "./comment.service.js";
@@ -79,6 +80,36 @@ export const updateComment = async (req, res) => {
       success: true,
       message: "Comment updated successfully.",
       data: updatedComment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const deleteComment = async (req, res) => {
+  const comment = await Comment.findById(req.params.commentId);
+  try {
+    if (!comment) {
+      return res.status(404).json({
+        success: false,
+        message: "Comment not found.",
+      });
+    }
+
+    if (comment.author.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to delete this comment.",
+      });
+    }
+    await deleteCommentService(req.params.commentId);
+
+    res.status(200).json({
+      success: true,
+      message: "Comment deleted successfully.",
     });
   } catch (error) {
     res.status(500).json({
