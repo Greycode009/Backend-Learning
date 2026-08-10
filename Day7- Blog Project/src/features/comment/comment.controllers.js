@@ -1,4 +1,7 @@
-import { createCommentService } from "./comment.service.js";
+import {
+  createCommentService,
+  getCommentsByBlogService,
+} from "./comment.service.js";
 import { Blog } from "../blog/blog.model.js";
 
 export const createComment = async (req, res) => {
@@ -31,7 +34,7 @@ export const createComment = async (req, res) => {
   }
 };
 
-export const getCommentsByBLog = async (req, res) => {
+export const getCommentsByBlog = async (req, res) => {
   try {
     const comments = await getCommentsByBlogService(req.params.blogId);
 
@@ -47,5 +50,3 @@ export const getCommentsByBLog = async (req, res) => {
     });
   }
 };
-
-
