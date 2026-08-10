@@ -49,3 +49,11 @@
 - Connected Blogs with User Accounts
 - Tested All CRUD Operations with Postman
 - Verified Authorization, Error Handling & Edge Cases
+
+## Day 7 - Comment API
+
+- Built a complete **Comment CRUD API**
+- Connected Comments with **Users & Blogs**
+- Implemented **Comment Ownership Authorization**
+- Added **Blog Existence Validation**
+- Tested Comment CRUD, Authorization & **Edge Cases**
