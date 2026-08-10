@@ -1,5 +1,5 @@
 import { createCommentService } from "./comment.service.js";
-import {Blog} from "../blog/blog.model.js";
+import { Blog } from "../blog/blog.model.js";
 
 export const createComment = async (req, res) => {
   try {
@@ -30,3 +30,22 @@ export const createComment = async (req, res) => {
     });
   }
 };
+
+export const getCommentsByBLog = async (req, res) => {
+  try {
+    const comments = await getCommentsByBlogService(req.params.blogId);
+
+    res.status(200).json({
+      success: true,
+      message: "Comments fetched successfully.",
+      data: comments,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
