@@ -7,7 +7,10 @@ import {
 } from "./comment.controllers.js";
 import { VerifyJWT } from "../../middleware/verifyJWT.js";
 import { validate } from "../../middleware/validate.js";
-import { createCommentSchema } from "./comment.validation.js";
+import {
+  createCommentSchema,
+  updateCommentSchema,
+} from "./comment.validation.js";
 
 const commentRouter = express.Router();
 
@@ -18,7 +21,12 @@ commentRouter.post(
   createComment,
 );
 commentRouter.get("/:blogId/comments", getCommentsByBlog);
-commentRouter.put("/:commentId", VerifyJWT, updateComment);
+commentRouter.put(
+  "/:commentId",
+  VerifyJWT,
+  validate(updateCommentSchema),
+  updateComment,
+);
 commentRouter.delete("/:commentId", VerifyJWT, deleteComment);
 
 export default commentRouter;
