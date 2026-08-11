@@ -57,3 +57,11 @@
 - Implemented **Comment Ownership Authorization**
 - Added **Blog Existence Validation**
 - Tested Comment CRUD, Authorization & **Edge Cases**
+
+## Day 8 - Request Validation
+
+- Added Zod for request validation
+- Created reusable validation middleware
+- Added Blog & Comment validation schemas
+- Validated Create & Update API requests
+- Tested valid, invalid, and edge-case inputs
