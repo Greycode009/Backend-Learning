@@ -65,3 +65,11 @@
 - Added Blog & Comment validation schemas
 - Validated Create & Update API requests
 - Tested valid, invalid, and edge-case inputs
+
+### Day 9 - Centralized Error Handling
+
+- Learned **Centralized Error Handling** in Express
+- Created a reusable **`AppError`** class with status codes
+- Implemented **Global Error Handling Middleware**
+- Learned to handle **404, 403, 400 (CastError), and 500 errors**
+- Integrated **Zod validation errors** with the centralized error system
