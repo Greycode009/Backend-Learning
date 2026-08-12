@@ -5,8 +5,9 @@ import {
   getBlogByIdService,
   updateBlogService,
 } from "./blog.service.js";
+import AppError from "../../utils/AppError.js";
 
-export const createBlog = async (req, res) => {
+export const createBlog = async (req, res, next) => {
   try {
     const blog = await createBlogService({
       title: req.body.title,
@@ -20,14 +21,11 @@ export const createBlog = async (req, res) => {
       data: blog,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-export const getAllBlogs = async (req, res) => {
+export const getAllBlogs = async (req, res, next) => {
   try {
     const blogs = await getAllBlogsService();
 
@@ -37,21 +35,15 @@ export const getAllBlogs = async (req, res) => {
       data: blogs,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-export const getBlogById = async (req, res) => {
+export const getBlogById = async (req, res, next) => {
   try {
     const blog = await getBlogByIdService(req.params.id);
     if (!blog) {
-      return res.status(404).json({
-        success: false,
-        message: "Blog not found.",
-      });
+      throw new AppError("Blog not found.", 404);
     }
     res.status(200).json({
       success: true,
@@ -59,29 +51,20 @@ export const getBlogById = async (req, res) => {
       data: blog,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-export const updateBlog = async (req, res) => {
+export const updateBlog = async (req, res, next) => {
   try {
     const blog = await getBlogByIdService(req.params.id);
 
     if (!blog) {
-      return res.status(404).json({
-        success: false,
-        message: "Blog not found",
-      });
+      throw new AppError("Blog not found.", 404);
     }
 
     if (blog.author.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: "You are not allowed to update this blog.",
-      });
+      throw new AppError("You are not allowed to update this blog.", 403);
     }
 
     const updatedBlog = await updateBlogService(req.params.id, {
@@ -95,28 +78,20 @@ export const updateBlog = async (req, res) => {
       data: updatedBlog,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-export const deleteBlog = async (req, res) => {
-  const blog = await getBlogByIdService(req.params.id);
+export const deleteBlog = async (req, res, next) => {
   try {
+    const blog = await getBlogByIdService(req.params.id);
+
     if (!blog) {
-      return res.status(404).json({
-        success: false,
-        message: "Blog not found",
-      });
+      throw new AppError("Blog not found.", 404);
     }
 
     if (blog.author.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: "You are not allowed to delete this blog.",
-      });
+      throw new AppError("You are not allowed to update this blog.", 403);
     }
 
     await deleteBlogService(req.params.id);
@@ -126,9 +101,6 @@ export const deleteBlog = async (req, res) => {
       message: "Blog deleted successfully.",
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };

@@ -8,7 +8,7 @@ import { generateOTP, getOtpHtml } from "../../utils/utils.js";
 import otpModel from "./otp.model.js";
 
 //POST register function
-export async function register(req, res) {
+export async function register(req, res, next) {
   const { username, email, password } = req.body;
   // Basic validation: ensure required fields exist
   const isAlreadyRegistered = await userModel.findOne({
@@ -121,7 +121,7 @@ export async function register(req, res) {
 }
 
 //POST login function
-export async function login(req, res) {
+export async function login(req, res, next) {
   const { email, password } = req.body;
   const user = await userModel.findOne({ email });
   if (!user) {
@@ -194,7 +194,7 @@ export async function login(req, res) {
 }
 
 // Get current user info function
-export async function getMe(req, res) {
+export async function getMe(req, res, next) {
   // Expect `Authorization: Bearer <token>`
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
@@ -219,7 +219,7 @@ export async function getMe(req, res) {
 }
 
 // Rotate refresh token function
-export async function refreshToken(req, res) {
+export async function refreshToken(req, res, next) {
   // Read refresh token from the HTTP-only cookie
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) {
@@ -289,7 +289,7 @@ export async function refreshToken(req, res) {
 }
 
 // Logout function
-export async function logout(req, res) {
+export async function logout(req, res, next) {
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) {
     return res.status(400).json({
@@ -322,7 +322,7 @@ export async function logout(req, res) {
 }
 
 // Logout from all sessions function
-export async function logoutAll(req, res) {
+export async function logoutAll(req, res, next) {
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) {
     return res.status(400).json({
@@ -346,7 +346,7 @@ export async function logoutAll(req, res) {
 }
 
 // Verify email function
-export async function verifyEmail(req, res) {
+export async function verifyEmail(req, res, next) {
   const { email, otp } = req.body;
   const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
 

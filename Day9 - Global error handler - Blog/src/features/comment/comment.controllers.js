@@ -7,7 +7,7 @@ import {
 import Comment from "./comment.model.js";
 import { Blog } from "../blog/blog.model.js";
 
-export const createComment = async (req, res) => {
+export const createComment = async (req, res, next) => {
   try {
     const blog = await Blog.findById(req.params.blogId);
 
@@ -30,14 +30,11 @@ export const createComment = async (req, res) => {
       data: comment,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-export const getCommentsByBlog = async (req, res) => {
+export const getCommentsByBlog = async (req, res, next) => {
   try {
     const comments = await getCommentsByBlogService(req.params.blogId);
 
@@ -47,14 +44,11 @@ export const getCommentsByBlog = async (req, res) => {
       data: comments,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-export const updateComment = async (req, res) => {
+export const updateComment = async (req, res, next) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
 
@@ -82,14 +76,11 @@ export const updateComment = async (req, res) => {
       data: updatedComment,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-export const deleteComment = async (req, res) => {
+export const deleteComment = async (req, res, next) => {
   const comment = await Comment.findById(req.params.commentId);
   try {
     if (!comment) {
@@ -112,9 +103,6 @@ export const deleteComment = async (req, res) => {
       message: "Comment deleted successfully.",
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
