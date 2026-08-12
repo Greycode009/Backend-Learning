@@ -4,6 +4,7 @@ import authRouter from "./features/auth/auth.routes.js";
 import blogRouter from "./features/blog/blog.routes.js";
 import commentRouter from "./features/comment/comment.routes.js";
 import cookieParser from "cookie-parser";
+import errorMiddleware from "./middleware/error.middleware.js";
 
 const app = express();
 
@@ -14,5 +15,8 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/comments", commentRouter);
+
+//Global error handler
+app.use(errorMiddleware);
 
 export default app;
