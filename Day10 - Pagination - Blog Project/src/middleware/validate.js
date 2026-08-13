@@ -1,8 +1,10 @@
 import AppError from "../utils/AppError.js";
 
-export const validate = (schema) => {
+export const validate = (schema, source = "body") => {
   return (req, res, next) => {
-    const result = schema.safeParse(req.body);
+    const result = schema.safeParse(req[source]);
+
+    req.validated = result.data;
 
     if (!result.success) {
       const errors = result.error.issues.map((issue) => ({
@@ -13,7 +15,10 @@ export const validate = (schema) => {
       throw new AppError("Validation failed.", 400, errors);
     }
 
-    req.body = result.data;
+    if (source === "body") {
+      req.body = result.data;
+    }
+    req.validated = result.data;
 
     next();
   };

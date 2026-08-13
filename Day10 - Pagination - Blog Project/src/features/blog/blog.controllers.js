@@ -27,7 +27,12 @@ export const createBlog = async (req, res, next) => {
 
 export const getAllBlogs = async (req, res, next) => {
   try {
-    const blogs = await getAllBlogsService();
+    const { page, limit } = req.validated;
+
+    const blogs = await getAllBlogsService({
+      page,
+      limit,
+    });
 
     res.status(200).json({
       success: true,

@@ -1,16 +1,31 @@
 import { Blog } from "./blog.model.js";
 
-
 export const createBlogService = async (blogData) => {
   const blog = await Blog.create(blogData);
 
   return blog;
 };
 
-export const getAllBlogsService = async () => {
-  const blogs = await Blog.find();
+export const getAllBlogsService = async ({ page = 1, limit = 10 }) => {
+  const skip = (page - 1) * limit;
 
-  return blogs;
+  const [blogs, total] = await Promise.all([
+    Blog.find().skip(skip).limit(limit),
+
+    Blog.countDocuments(),
+  ]);
+
+  const totalPages = Math.ceil(total / limit);
+
+  return {
+    blogs,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages,
+    },
+  };
 };
 
 export const getBlogByIdService = async (blogId) => {
