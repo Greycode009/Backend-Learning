@@ -73,3 +73,11 @@
 - Implemented **Global Error Handling Middleware**
 - Learned to handle **404, 403, 400 (CastError), and 500 errors**
 - Integrated **Zod validation errors** with the centralized error system
+
+### Day 10 - Pagination
+
+- Learned **API Pagination** with `page` and `limit`
+- Implemented MongoDB **`skip()` & `limit()`**
+- Added **pagination metadata** with total pages
+- Added **Zod validation** for query parameters
+- Implemented reusable validation for **body & query** data
