@@ -6,13 +6,32 @@ export const createBlogService = async (blogData) => {
   return blog;
 };
 
-export const getAllBlogsService = async ({ page = 1, limit = 10 }) => {
+export const getAllBlogsService = async ({
+  search,
+  author,
+  sort,
+  page = 1,
+  limit = 10,
+}) => {
   const skip = (page - 1) * limit;
+  //Filter
+  const filter = {};
+  if (author) {
+    filter.author = author;
+  }
+  //Search
+  if (search) {
+    filter.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { content: { $regex: search, $options: "i" } },
+    ];
+  }
+  const sortOrder = sort === "oldest" ? 1 : -1;
 
   const [blogs, total] = await Promise.all([
-    Blog.find().skip(skip).limit(limit),
+    Blog.find(filter).sort({ createdAt: sortOrder }).skip(skip).limit(limit),
 
-    Blog.countDocuments(),
+    Blog.countDocuments(filter),
   ]);
 
   const totalPages = Math.ceil(total / limit);

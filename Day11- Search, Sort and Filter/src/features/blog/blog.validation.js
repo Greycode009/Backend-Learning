@@ -12,6 +12,10 @@ export const createBlogSchema = z.object({
 export const updateBlogSchema = createBlogSchema.partial();
 
 export const paginationSchema = z.object({
+  search: z.string().trim().optional(),
+  author: z.string().trim().optional(),
+  sort: z.enum(["latest", "oldest"]).default("latest"),
+
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
 });
