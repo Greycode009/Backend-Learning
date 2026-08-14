@@ -81,3 +81,11 @@
 - Added **pagination metadata** with total pages
 - Added **Zod validation** for query parameters
 - Implemented reusable validation for **body & query** data
+
+## Day 11 - Search, Filtering & Sorting
+
+- Implemented **Blog Search** using title & content
+- Added **Author Filtering**
+- Added **Latest & Oldest Sorting**
+- Combined **Search, Filter & Sort with Pagination**
+- Tested **Individual & Combined Queries**
