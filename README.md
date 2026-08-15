@@ -89,3 +89,11 @@
 - Added **Latest & Oldest Sorting**
 - Combined **Search, Filter & Sort with Pagination**
 - Tested **Individual & Combined Queries**
+
+## Day 12 - Practice & Revisit
+
+- Revisited **Search, Filtering, Sorting & Pagination**
+- Practiced **Combined Query Parameters**
+- Tested **Complex API Queries**
+- Debugged **Pagination Logic**
+- Reviewed **Request → Controller → Service → Database** flow
