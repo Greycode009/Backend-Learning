@@ -97,3 +97,11 @@
 - Tested **Complex API Queries**
 - Debugged **Pagination Logic**
 - Reviewed **Request → Controller → Service → Database** flow
+
+## Day 13 - Blog API Frontend Integration
+- Built and integrated the **Blog API frontend**
+- Connected the frontend with the **backend REST API**
+- Implemented **All Stories & My Stories**
+- Added **Search, Sorting & Pagination** to the frontend
+- Connected **Author Filtering** through My Stories
+- Tested the complete **Frontend → Backend → Database → Frontend** flow
