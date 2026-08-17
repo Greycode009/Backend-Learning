@@ -105,3 +105,11 @@
 - Added **Search, Sorting & Pagination** to the frontend
 - Connected **Author Filtering** through My Stories
 - Tested the complete **Frontend → Backend → Database → Frontend** flow
+
+## Day 14 - URL Shortener Design
+
+- Started the **URL Shortener Project**
+- Designed the **API Requirements & Endpoints**
+- Defined the **URL Data Model**
+- Planned the **Short-Code Generation Strategy**
+- Designed the **Short URL Creation & Redirect Flow**
