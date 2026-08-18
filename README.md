@@ -113,3 +113,12 @@
 - Defined the **URL Data Model**
 - Planned the **Short-Code Generation Strategy**
 - Designed the **Short URL Creation & Redirect Flow**
+
+## Day 15 - Short URL Creation
+
+- Built the **Short URL Creation API**
+- Added **URL Validation**
+- Implemented **6-Character Short-Code Generation**
+- Connected **Sequelize with PostgreSQL**
+- Added **Unique Short-Code Collision Handling**
+- Tested the complete **Request → Controller → Service → Database** flow
