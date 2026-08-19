@@ -122,3 +122,11 @@
 - Connected **Sequelize with PostgreSQL**
 - Added **Unique Short-Code Collision Handling**
 - Tested the complete **Request → Controller → Service → Database** flow
+
+## Day 16 - Short URL Redirection
+
+- Built the **Short URL Redirect API**
+- Added **Short-Code Lookup & 404 Handling**
+- Implemented **Redirect to Original URL**
+- Tested the complete **Request → Controller → Database → Redirect** flow
+- Committed and pushed the completed **Day 16 progress**
