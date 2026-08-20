@@ -130,3 +130,11 @@
 - Implemented **Redirect to Original URL**
 - Tested the complete **Request → Controller → Database → Redirect** flow
 - Committed and pushed the completed **Day 16 progress**
+
+## Day 17 - Click Tracking & Analytics
+
+- Added **Click Tracking** for Short URLs
+- Added **Click Count** to the URL model
+- Implemented **Automatic Click Increment** on redirects
+- Built the **URL Statistics Endpoint**
+- Tested the complete **Redirect → Click Tracking → Statistics** flow
