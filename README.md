@@ -138,3 +138,11 @@
 - Implemented **Automatic Click Increment** on redirects
 - Built the **URL Statistics Endpoint**
 - Tested the complete **Redirect → Click Tracking → Statistics** flow
+
+## Day 18 - URL Shortener Production Features
+
+- Added **URL Expiration** with expiry-date validation
+- Implemented **Expired URL Handling** with `410 Gone`
+- Added **Rate Limiting** using `express-rate-limit`
+- Added **Custom Short Code** support with validation and duplicate protection
+- Tested **Edge Cases & Production Scenarios**
