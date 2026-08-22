@@ -99,6 +99,7 @@
 - Reviewed **Request → Controller → Service → Database** flow
 
 ## Day 13 - Blog API Frontend Integration
+
 - Built and integrated the **Blog API frontend**
 - Connected the frontend with the **backend REST API**
 - Implemented **All Stories & My Stories**
@@ -146,3 +147,11 @@
 - Added **Rate Limiting** using `express-rate-limit`
 - Added **Custom Short Code** support with validation and duplicate protection
 - Tested **Edge Cases & Production Scenarios**
+
+## Day 19 — File Uploads 🚀
+
+- Learned **`multipart/form-data`** and how file uploads differ from JSON
+- Implemented **Multer single-file uploads**
+- Added **image type & 2 MB size validation**
+- Built **upload error handling** with clean JSON responses
+- Organized the upload feature using **routes, controllers & middleware** and tested the complete flow
